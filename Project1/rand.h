@@ -33,7 +33,6 @@ int get_rand(void) {
 		scanf("%d", &sides);
 	}
 	printf("Done.\n");
-	return rand_count;
 }
 
 void guess(void) {
@@ -77,3 +76,27 @@ void guess(void) {
 	printf("Done.\n");
 }
 
+void note(void) {
+	char text[256];
+	int character;
+	FILE* log = fopen("log", "a");
+
+	if (log == NULL) {
+		printf("Unable to open log file.\n");
+		return;
+	}
+
+	while ((character = getchar()) != '\n' && character != EOF) {
+	}
+	printf("Please enter the text to save (enter '0' to quit):\n");
+	while (fgets(text, sizeof(text), stdin) != NULL) {
+		if (text[0] == '0' && (text[1] == '\n' || text[1] == '\0')) {
+			break;
+		}
+		fputs(text, log);
+		printf("Text saved. Enter more text (enter '0' to quit):\n");
+	}
+
+	fclose(log);
+	printf("Done.\n");
+}
