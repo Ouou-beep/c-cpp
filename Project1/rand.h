@@ -114,8 +114,6 @@ void note(void) {
 		}
 	} while (log != NULL);
 
-	// Create a new log file for writing
-
 	log = fopen(filename, "w");
 	if (log == NULL) {
 		printf("Unable to create log file.\n");

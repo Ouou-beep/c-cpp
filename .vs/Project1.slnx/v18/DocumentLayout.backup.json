@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\c,c\u002B\u002B\\vs\\Project1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3A6E2C5C-52E7-46D9-BF9C-8A5836F7ED5C}|Project1\\Project1.vcxproj|D:\\c,c\u002B\u002B\\vs\\Project1\\Project1\\rand.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3A6E2C5C-52E7-46D9-BF9C-8A5836F7ED5C}|Project1\\Project1.vcxproj|solutionrelative:Project1\\rand.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3A6E2C5C-52E7-46D9-BF9C-8A5836F7ED5C}|Project1\\Project1.vcxproj|D:\\c,c\u002B\u002B\\vs\\Project1\\Project1\\getrandom.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3A6E2C5C-52E7-46D9-BF9C-8A5836F7ED5C}|Project1\\Project1.vcxproj|solutionrelative:Project1\\getrandom.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3A6E2C5C-52E7-46D9-BF9C-8A5836F7ED5C}|Project1\\Project1.vcxproj|D:\\c,c\u002B\u002B\\vs\\Project1\\Project1\\rand.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3A6E2C5C-52E7-46D9-BF9C-8A5836F7ED5C}|Project1\\Project1.vcxproj|solutionrelative:Project1\\rand.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,11 +18,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "rand.h",
               "DocumentMoniker": "D:\\c,c\u002B\u002B\\vs\\Project1\\Project1\\rand.h",
               "RelativeDocumentMoniker": "Project1\\rand.h",
@@ -40,13 +40,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "getrandom.c",
               "DocumentMoniker": "D:\\c,c\u002B\u002B\\vs\\Project1\\Project1\\getrandom.c",
               "RelativeDocumentMoniker": "Project1\\getrandom.c",
               "ToolTip": "D:\\c,c\u002B\u002B\\vs\\Project1\\Project1\\getrandom.c",
               "RelativeToolTip": "Project1\\getrandom.c",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAAwCsAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2026-10-13T02:42:30.143Z",
               "EditorCaption": ""

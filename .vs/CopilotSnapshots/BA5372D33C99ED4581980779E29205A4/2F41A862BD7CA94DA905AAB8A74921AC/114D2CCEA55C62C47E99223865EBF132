@@ -1,0 +1,130 @@
+﻿#pragma once
+int rand_count = 0;
+int guess_count = 0;
+
+int get_rand(void) {
+	int sides, dice;
+	printf("please enter the sides of dice:(enter '0' to quit)\n");
+	scanf("%d", &sides);
+	while (sides != 0) {
+		if (sides < 2) {
+			printf("please enter thr valid valu of sides!");
+			scanf("%d", &sides);
+			continue;
+		}
+		printf("please enter the number of dice:(enter '0' to quit)\n");
+		scanf("%d", &dice);
+		while (dice != 0) {
+			if (dice < 0) {
+				printf("please enter the valid value of dice!");
+				scanf("%d", &dice);
+				continue;
+			}
+			int total = 0;
+			srand((unsigned)time(NULL));
+			for (int i = dice;i > 0;i--) {
+				total += (rand() % sides + 1);
+			}
+			printf("the total of %d dice with %d sides is: %d\n", dice, sides, total);
+			rand_count++;
+			break;
+		}
+		printf("please enter the sides of dice:(enter '0' to quit)\n");
+		scanf("%d", &sides);
+	}
+	printf("Done.\n");
+}
+
+void guess(void) {
+	int min, max;
+	printf("please enter the min of number:(enter '-1' to quit)\n");
+	scanf("%d", &min);
+	while (min != -1) {
+		if (min < 0) {
+			printf("please enter a positive number:(enter '-1' to quit)\n");
+			scanf("%d", &min);
+			continue;
+		}
+		printf("please enter the max of number:(enter '-1' to quit)\n");
+		scanf("%d", &max);
+		if (max == -1) break;
+		while (max <= min) {
+			printf("please enter a valid max number:(enter '-1' to quit)\n");
+			scanf("%d", &max);
+			if (max == -1) break;
+		}
+
+		srand((unsigned)time(NULL));
+		int rand1 = rand() % (max - min + 1) + min;
+
+		int rand2=min;
+		while (rand2 >= min && rand2 <= max) {
+			if (rand2 > rand1) max = rand2;
+			else if (rand2 < rand1) min = rand2;
+			printf("please guess the number between %d and %d:", min, max);
+			scanf("%d", &rand2);
+			guess_count++;
+			if (rand2 == rand1) {
+				printf("Congratulations! You guessed the number %d correctly!\n", rand1);
+				printf("You have guessed %d times.\n", guess_count);
+				break;
+			}
+		}
+		printf("please enter the min of number:(enter '-1' to quit)\n");
+		scanf("%d", &min);
+	}
+	printf("Done.\n");
+}
+
+void note(void) {
+	char text[256];
+	int character;
+	FILE* log = fopen("log", "a");
+
+	if (log == NULL) {
+		printf("Unable to open log file.\n");
+		return;
+	}
+
+	while ((character = getchar()) != '\n' && character != EOF) {
+	}
+	printf("Please enter the text to save (enter '0' to quit):\n");
+	while (fgets(text, sizeof(text), stdin) != NULL) {
+		if (text[0] == '0' && (text[1] == '\n' || text[1] == '\0')) {
+			break;
+		}
+		fputs(text, log);
+		printf("Text saved. Enter more text (enter '0' to quit):\n");
+	}
+
+	fclose(log);
+	printf("Done.\n");
+}
+
+void read(void) {
+	char text[256];
+	int character;
+	FILE* log = fopen("log", "r");
+
+	if (log == NULL) {
+		printf("Unable to open log file.\n");
+		return;
+	}
+
+	printf("Here is the text in the log:\n");
+	while (fgets(text, sizeof(text), log) != NULL) {
+		printf("%s", text);
+	}
+	fclose(log);
+
+	while ((character = getchar()) != '\n' && character != EOF) {
+	}
+	printf("Enter '0' to return to the menu:\n");
+	while (fgets(text, sizeof(text), stdin) != NULL) {
+		if (text[0] == '0' && (text[1] == '\n' || text[1] == '\0')) {
+			break;
+		}
+		printf("Please enter '0' to return to the menu:\n");
+	}
+	printf("Done.\n");
+}
