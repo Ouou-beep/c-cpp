@@ -1,6 +1,11 @@
 #pragma once
+#include <io.h>
+#include <windows.h>
+
 int rand_count = 0;
 int guess_count = 0;
+
+// Function to roll dice and return the total
 
 int get_rand(void) {
 	int sides, dice;
@@ -34,6 +39,8 @@ int get_rand(void) {
 	}
 	printf("Done.\n");
 }
+
+// Function to guess a random number between a given range
 
 void guess(void) {
 	int min, max;
@@ -76,19 +83,48 @@ void guess(void) {
 	printf("Done.\n");
 }
 
+// Function to take notes and save them to a log file
+
 void note(void) {
 	char text[256];
+	char filename[64];
 	int character;
-	FILE* log = fopen("log", "a");
+	int suffix = 0;
+	SYSTEMTIME current_time;
+	FILE* log;
 
+	GetLocalTime(&current_time);
+	do {
+		if (suffix == 0) {
+			sprintf_s(filename, sizeof(filename), "log_%04d%02d%02d_%02d%02d%02d%03d.txt",
+				current_time.wYear, current_time.wMonth, current_time.wDay,
+				current_time.wHour, current_time.wMinute, current_time.wSecond,
+				current_time.wMilliseconds);
+		}
+		else {
+			sprintf_s(filename, sizeof(filename), "log_%04d%02d%02d_%02d%02d%02d%03d_%d.txt",
+				current_time.wYear, current_time.wMonth, current_time.wDay,
+				current_time.wHour, current_time.wMinute, current_time.wSecond,
+				current_time.wMilliseconds, suffix);
+		}
+		log = fopen(filename, "r");
+		if (log != NULL) {
+			fclose(log);
+			suffix++;
+		}
+	} while (log != NULL);
+
+	// Create a new log file for writing
+
+	log = fopen(filename, "w");
 	if (log == NULL) {
-		printf("Unable to open log file.\n");
+		printf("Unable to create log file.\n");
 		return;
 	}
 
+	printf("Saving text to %s (enter '0' to quit):\n", filename);
 	while ((character = getchar()) != '\n' && character != EOF) {
 	}
-	printf("Please enter the text to save (enter '0' to quit):\n");
 	while (fgets(text, sizeof(text), stdin) != NULL) {
 		if (text[0] == '0' && (text[1] == '\n' || text[1] == '\0')) {
 			break;
@@ -97,6 +133,79 @@ void note(void) {
 		printf("Text saved. Enter more text (enter '0' to quit):\n");
 	}
 
+	fclose(log);
+	printf("Done.\n");
+}
+
+// Function to read notes from existing log files	
+
+void read_notes(void) {
+	struct _finddata_t file_info;
+	char files[100][MAX_PATH];
+	char input[32];
+	char text[256];
+	int character;
+	int file_count = 0;
+	int choice;
+	intptr_t search_handle;
+	FILE* log;
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO console_info;
+	BOOL has_console_info;
+
+	search_handle = _findfirst("log_*.txt", &file_info);
+	if (search_handle == -1) {
+		printf("No log files found.\n");
+		return;
+	}
+
+	do {
+		if (file_count < 100) {
+			sprintf_s(files[file_count], MAX_PATH, "%s", file_info.name);
+			file_count++;
+		}
+	} while (_findnext(search_handle, &file_info) == 0);
+	_findclose(search_handle);
+
+	printf("Available log files:\n");
+	for (int i = 0; i < file_count; i++) {
+		printf("%d. %s\n", i + 1, files[i]);
+	}
+
+	while ((character = getchar()) != '\n' && character != EOF) {
+	}
+	while (1) {
+		printf("Please enter the file number to read (enter '0' to return):\n");
+		if (fgets(input, sizeof(input), stdin) == NULL) {
+			return;
+		}
+		if (sscanf_s(input, "%d", &choice) == 1 && choice == 0) {
+			printf("Done.\n");
+			return;
+		}
+		if (sscanf_s(input, "%d", &choice) == 1 && choice >= 1 && choice <= file_count) {
+			break;
+		}
+		printf("Invalid file number.\n");
+	}
+
+	log = fopen(files[choice - 1], "r");
+	if (log == NULL) {
+		printf("Unable to open the selected log file.\n");
+		return;
+	}
+
+	printf("Contents of %s:\n", files[choice - 1]);
+	has_console_info = GetConsoleScreenBufferInfo(console, &console_info);
+	if (has_console_info) {
+		SetConsoleTextAttribute(console, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	}
+	while (fgets(text, sizeof(text), log) != NULL) {
+		printf("%s", text);
+	}
+	if (has_console_info) {
+		SetConsoleTextAttribute(console, console_info.wAttributes);
+	}
 	fclose(log);
 	printf("Done.\n");
 }
