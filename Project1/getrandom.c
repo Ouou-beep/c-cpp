@@ -6,16 +6,20 @@
 
 extern int get_rand(void);
 extern void guess(void);
+extern void note(void);
+extern void read_notes(void);
 
 int main() {
 	while (1) {
-		int min_choice = 1, max_choice = 3, choice;
+		int min_choice = 1, max_choice = 5, choice;
 		printf("Welcome to the random number generator!\n"
 			"What would you like to do?\n"
 			"1. Roll dice\n"
 			"2. Guess a number\n"
-			"3. Quit\n"
-			"Please enter your choice (1-3): \n"
+			"3. Take notes\n"
+			"4. Read notes\n"
+			"5. Quit\n"
+			"Please enter your choice (1-5): \n"
 		);
 		scanf("%d", &choice);
 		switch (choice) {
@@ -27,6 +31,12 @@ int main() {
 			guess();
 			break;
 		case 3:
+			note();
+			break;
+		case 4:
+			read_notes();
+			break;
+		case 5:
 			printf("Thank you for playing!\n");
 			goto end;
 		default:
